@@ -13,8 +13,8 @@ class MailchimpFDW(ForeignDataWrapper):
         self.key=options.get('key',None)
         self.list_name=options.get('list_name',None)
 
-        #
-        self.page_size =  51 
+        # the list.member cannot return more than 100 result at once
+        self.page_size =  100
 
         # chimp is the global object
         self.chimp=mailchimp.Mailchimp(self.key)
@@ -31,6 +31,7 @@ class MailchimpFDW(ForeignDataWrapper):
         total = self.chimp.lists.members(self.list_id)['total']
         start_page = 0
 
+        # Fetch the members, page by page
         while start_page * self.page_size <= total :
             filters = {'start' : start_page, 'limit': self.page_size} 
             page=self.chimp.lists.members(self.list_id,'',filters)['data']
@@ -39,4 +40,5 @@ class MailchimpFDW(ForeignDataWrapper):
                 for column_name in self.columns:
                     line[column_name] = member[column_name]
                 yield line
+            # Next page
             start_page += 1 
