@@ -3,6 +3,7 @@
 """
 
 from multicorn import ForeignDataWrapper
+from multicorn.utils import log_to_postgres
 import mailchimp
 
 
@@ -24,6 +25,9 @@ class MailchimpFDW(ForeignDataWrapper):
         self.list_id = the_list['data'][0]['id']
 
         self.columns=columns
+        
+        # DEBUG
+        #log_to_postgres("Mailchimp FDW loaded : %s" % __file__) 
 
 
     def execute(self, quals, columns):
@@ -34,7 +38,9 @@ class MailchimpFDW(ForeignDataWrapper):
         # Fetch the members, page by page
         while start_page * self.page_size <= total :
             filters = {'start' : start_page, 'limit': self.page_size} 
-            page=self.chimp.lists.members(self.list_id,'',filters)['data']
+            page =self.chimp.lists.members(self.list_id,'subscribed',filters)['data']
+            page+=self.chimp.lists.members(self.list_id,'cleaned',filters)['data']
+            page+=self.chimp.lists.members(self.list_id,'unsubscribed',filters)['data']
             for member in page:
                 line = {}
                 for column_name in self.columns:
