@@ -82,7 +82,7 @@ class MailchimpMembersFDW(MailchimpFDW):
         # Fetch the members, page by page
         while start_page * self.page_size <= total :
             filters = {'start' : start_page, 'limit': self.page_size} 
-            data =self.chimp.lists.members(self.list_id,'subscribed',filters)['data']
+            data+=self.chimp.lists.members(self.list_id,'subscribed',filters)['data']
             data+=self.chimp.lists.members(self.list_id,'cleaned',filters)['data']
             data+=self.chimp.lists.members(self.list_id,'unsubscribed',filters)['data']
             # Next page
