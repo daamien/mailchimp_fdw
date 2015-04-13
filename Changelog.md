@@ -1,6 +1,10 @@
 ChangeLog
 ====================
 
+0.3.1
+----------------------
+
+* FIX : big mistake in the members wrapper
 
 0.3.0
 ---------------------
