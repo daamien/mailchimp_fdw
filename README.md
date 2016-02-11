@@ -6,14 +6,20 @@ a PostgreSQL Foreign Data Wrapper for Maichimp
 
 ## INSTALL
 
+Assuming your using debian and the apt.postgresql.org repositories.
+
 ```
-sudo apt-get install postgresql-9.3-python3-multicorn  python-pip
-pip install mailchimp
+sudo apt-get install postgresql-9.5-python3-multicorn python3-setuptools
+sudo easy_install3 pip
+sudo pip-3.2 install mailchimp
 git clone  https://github.com/daamien/mailchimp_fdw
 cd mailchimp_fdw
-sudo python setup.py install
+sudo python3 setup.py install
 sudo service postgresql restart
 ```
+
+
+
 
 ## USE
 
