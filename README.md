@@ -1,5 +1,5 @@
 # mailchimp_fdw
-a PostgreSQL Foreign Data Wrapper for Maichimp
+A PostgreSQL Foreign Data Wrapper for [MailChimp](https://mailchimp.com/)
 
 
 
